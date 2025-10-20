@@ -1,787 +1,901 @@
+// app/page.tsx
 'use client';
-import * as React from 'react';
-import { 
-  AppBar, 
-  Avatar,
-  Box, 
-  Button, 
-  Card, 
-  CardContent, 
-  Chip,
-  Container, 
-  Divider,
-  Grid,
-  IconButton,
-  Paper,
-  Toolbar, 
-  Typography,
-  useScrollTrigger,
-  Fade,
-  Slide
-} from '@mui/material';
 
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import SpeedIcon from '@mui/icons-material/Speed';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import PsychologyIcon from '@mui/icons-material/Psychology';
-import ArticleIcon from '@mui/icons-material/Article';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import GroupsIcon from '@mui/icons-material/Groups';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { keyframes } from '@mui/system';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-// Animações personalizadas
-const floatAnimation = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-`;
+const AuroraLandingPage = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
 
-const pulseAnimation = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-`;
-
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const shimmerAnimation = keyframes`
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-`;
-
-// Componente para efeito de elevação no AppBar ao rolar
-function ElevationScroll(props) {
-  const { children } = props;
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  });
-
-  return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-    sx: {
-      ...children.props.sx,
-      backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.8)',
-      backdropFilter: trigger ? 'blur(10px)' : 'none',
-      transition: 'all 0.3s ease',
-    }
-  });
-}
-
-export default function HomePage() {
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsVisible(true);
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const features = [
+    {
+      icon: '🧠',
+      title: "IA Avançada",
+      description: "Algoritmos de machine learning treinados com milhões de casos médicos"
+    },
+    {
+      icon: '⚡',
+      title: "Diagnóstico Rápido",
+      description: "Resultados em segundos, acelerando o processo de tomada de decisão"
+    },
+    {
+      icon: '🛡️',
+      title: "Segurança Máxima",
+      description: "Dados criptografados e compliance total com HIPAA e LGPD"
+    },
+    {
+      icon: '👥',
+      title: "Colaboração",
+      description: "Compartilhamento seguro de casos entre equipes médicas"
+    }
+  ];
+
+  const benefits = [
+    "Redução de 40% no tempo de diagnóstico",
+    "Acurácia de 95% em diagnósticos preliminares",
+    "Integração com principais sistemas de saúde",
+    "Suporte 24/7 para equipes médicas",
+    "Atualizações contínuas da base de conhecimento"
+  ];
+
+  const testimonials = [
+    {
+      name: "Dr. Carlos Silva",
+      role: "Cardiologista - Hospital Albert Einstein",
+      text: "O AURORA revolucionou nossa forma de trabalhar. Diagnósticos mais precisos em 70% menos tempo.",
+      rating: 5
+    },
+    {
+      name: "Dra. Ana Costa",
+      role: "Radiologista - Sírio-Libanês",
+      text: "A ferramenta mais intuitiva que já usei. A IA realmente entende o contexto clínico.",
+      rating: 5
+    }
+  ];
+
+  if (!isMounted) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 0,
+        padding: 0
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '64px',
+            height: '64px',
+            border: '4px solid #2563eb',
+            borderTop: '4px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 16px'
+          }}></div>
+          <p style={{ color: '#4b5563' }}>Carregando AURORA...</p>
+        </div>
+        
+        <style jsx>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'background.default', color: 'text.primary' }}>
-      <ElevationScroll>
-        <AppBar position="fixed" sx={{ bgcolor: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(10px)', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-          <Container maxWidth="xl">
-            <Toolbar>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-                <AutoAwesomeIcon sx={{ mr: 1, color: 'primary.main' }} />
-                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', background: 'linear-gradient(45deg, #1976d2, #42a5f5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                  Aurora IA
-                </Typography>
-              </Box>
-              <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-                <Button href="#features" color="inherit">Recursos</Button>
-                <Button href="#how-it-works" color="inherit">Como Funciona</Button>
-                <Button href="#testimonials" color="inherit">Depoimentos</Button>
-                <Button href="#benefits" color="inherit">Vantagens</Button>
-              </Box>
-              <Button variant="contained" color="primary" sx={{ ml: 4, borderRadius: 2 }}>
-                Acessar Plataforma
-              </Button>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </ElevationScroll>
-
-      <Toolbar /> {/* Espaço para o AppBar fixo */}
-
-      {/* Hero Section */}
-      <Box 
-        sx={{ 
-          pt: { xs: 8, md: 16 }, 
-          pb: { xs: 8, md: 16 }, 
-          textAlign: 'center', 
-          background: 'linear-gradient(-45deg, #1e1e2f, #3a3a5e, #2c2c4c, #252542)',
-          backgroundSize: '400% 400%',
-          animation: `${gradientAnimation} 15s ease infinite`,
-          color: '#fff',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 20% 80%, rgba(129, 212, 250, 0.2) 0%, transparent 40%), radial-gradient(circle at 80% 20%, rgba(187, 222, 251, 0.3) 0%, transparent 40%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <Container maxWidth="md">
-          <Chip 
-            icon={<AutoAwesomeIcon />} 
-            label="Tecnologia de Ponta em Saúde" 
-            sx={{ 
-              mb: 3, 
-              background: 'rgba(255, 255, 255, 0.15)', 
-              color: 'white', 
-              backdropFilter: 'blur(10px)',
-              animation: `${pulseAnimation} 2s infinite`
-            }} 
-          />
-          <Typography 
-            component="h1" 
-            variant="h2" 
-            gutterBottom
-            sx={{ 
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%)',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      margin: 0,
+      padding: 0,
+      overflowX: 'hidden'
+    }}>
+      {/* Header */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(12px)',
+        zIndex: 50,
+        borderBottom: '1px solid #dbeafe',
+        transition: 'all 0.3s ease'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '16px 24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontWeight: 'bold'
+            }}>
+              🏥
+            </div>
+            <span style={{
+              fontSize: '24px',
               fontWeight: 'bold',
-              background: 'linear-gradient(45deg, #81d4fa, #f8f8f2, #bbdefb)',
+              background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              mb: 3
+              WebkitTextFillColor: 'transparent'
+            }}>
+              AURORA
+            </span>
+          </div>
+          
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <a href="#features" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              transition: 'color 0.3s ease',
+              fontWeight: '500'
+            }}>
+              Recursos
+            </a>
+            <a href="#benefits" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              transition: 'color 0.3s ease',
+              fontWeight: '500'
+            }}>
+              Vantagens
+            </a>
+            <a href="#testimonials" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              transition: 'color 0.3s ease',
+              fontWeight: '500'
+            }}>
+              Depoimentos
+            </a>
+            <a href="#contact" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              transition: 'color 0.3s ease',
+              fontWeight: '500'
+            }}>
+              Contato
+            </a>
+          </nav>
+
+          <button 
+            onClick={handleLogin}
+            style={{
+              background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+              color: 'white',
+              padding: '10px 24px',
+              borderRadius: '8px',
+              fontWeight: '600',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(37, 99, 235, 0.2)';
             }}
           >
-            A Próxima Geração de Diagnósticos Médicos
-          </Typography>
-          <Typography variant="h5" sx={{ mt: 3, color: 'rgba(255, 255, 255, 0.9)', mb: 4 }}>
-            Capacite profissionais de saúde com análises inteligentes, seguras e instantâneas para decisões clínicas mais assertivas.
-          </Typography>
-          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Button 
-              variant="contained" 
-              size="large" 
-              color="primary" 
-              sx={{ 
-                py: 1.5, 
-                px: 5, 
-                fontSize: '1.1rem',
-                borderRadius: 2,
-                animation: `${pulseAnimation} 2s infinite`
-              }}
-            >
-              Solicitar Demonstração
-            </Button>
-            <Button 
-              variant="outlined" 
-              size="large" 
-              sx={{ 
-                py: 1.5, 
-                px: 5, 
-                fontSize: '1.1rem',
-                borderRadius: 2,
-                color: 'white',
-                borderColor: 'white',
-                '&:hover': {
-                  borderColor: 'white',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                }
-              }}
-            >
-              Saiba Mais
-            </Button>
-          </Box>
-        </Container>
-        <IconButton 
-          sx={{ 
-            position: 'absolute', 
-            bottom: 40, 
-            left: '50%', 
-            transform: 'translateX(-50%)',
-            color: 'white',
-            animation: `${floatAnimation} 2s ease-in-out infinite`,
-            border: '1px solid rgba(255, 255, 255, 0.3)'
-          }}
-          href="#features"
-        >
-          <KeyboardArrowDownIcon />
-        </IconButton>
-      </Box>
+            Fazer Login
+          </button>
+        </div>
+      </header>
 
-      {/* Stats Section */}
-      <Container sx={{ py: 8, transform: 'translateY(-50px)' }}>
-        <Paper 
-          elevation={8} 
-          sx={{ 
-            p: 4, 
-            borderRadius: 4, 
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,245,255,0.9) 100%)',
-            backdropFilter: 'blur(10px)'
-          }}
-        >
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={6} sm={3} textAlign="center">
-              <Typography variant="h3" color="primary" fontWeight="bold">98%</Typography>
-              <Typography variant="body1" color="text.secondary">Precisão</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} textAlign="center">
-              <Typography variant="h3" color="primary" fontWeight="bold">5.000+</Typography>
-              <Typography variant="body1" color="text.secondary">Profissionais</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} textAlign="center">
-              <Typography variant="h3" color="primary" fontWeight="bold">2M+</Typography>
-              <Typography variant="body1" color="text.secondary">Análises</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} textAlign="center">
-              <Typography variant="h3" color="primary" fontWeight="bold">0.2s</Typography>
-              <Typography variant="body1" color="text.secondary">Tempo Médio</Typography>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
+      {/* Hero Section */}
+      <section style={{ 
+        paddingTop: '128px', 
+        paddingBottom: '80px', 
+        paddingLeft: '24px', 
+        paddingRight: '24px'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '60px',
+            alignItems: 'center'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '8px 20px',
+                borderRadius: '20px',
+                backgroundColor: '#dbeafe',
+                color: '#1e40af',
+                fontSize: '14px',
+                fontWeight: '500',
+                width: 'fit-content'
+              }}>
+                ⚡ Revolucionando o Diagnóstico Médico
+              </div>
+              
+              <h1 style={{
+                fontSize: '52px',
+                fontWeight: 'bold',
+                color: '#111827',
+                lineHeight: '1.1',
+                margin: 0
+              }}>
+                Diagnóstico Preciso com{' '}
+                <span style={{
+                  background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                  IA Avançada
+                </span>
+              </h1>
+              
+              <p style={{
+                fontSize: '18px',
+                color: '#6b7280',
+                lineHeight: '1.7',
+                margin: 0
+              }}>
+                AURORA é seu assistente inteligente para diagnósticos médicos mais rápidos, 
+                precisos e confiáveis. Potencialize sua prática médica com tecnologia de ponta.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '16px', paddingTop: '8px' }}>
+                <button style={{
+                  background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                  color: 'white',
+                  padding: '16px 32px',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '16px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(37, 99, 235, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
+                }}
+                >
+                  Começar Agora
+                </button>
+                
+                <button style={{
+                  border: '2px solid #2563eb',
+                  color: '#2563eb',
+                  padding: '16px 32px',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '16px',
+                  backgroundColor: 'transparent',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#2563eb';
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#2563eb';
+                }}
+                >
+                  Ver Demonstração
+                </button>
+              </div>
+            </div>
+            
+            <div style={{
+              position: 'relative',
+              backgroundColor: 'white',
+              borderRadius: '16px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+              border: '1px solid #e5e7eb'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+                borderRadius: '12px',
+                padding: '24px',
+                color: 'white'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <div style={{ 
+                      width: '12px', 
+                      height: '12px', 
+                      backgroundColor: '#ef4444', 
+                      borderRadius: '50%'
+                    }}></div>
+                    <div style={{ 
+                      width: '12px', 
+                      height: '12px', 
+                      backgroundColor: '#f59e0b', 
+                      borderRadius: '50%'
+                    }}></div>
+                    <div style={{ 
+                      width: '12px', 
+                      height: '12px', 
+                      backgroundColor: '#10b981', 
+                      borderRadius: '50%'
+                    }}></div>
+                  </div>
+                  <div style={{ fontSize: '18px' }}>💬</div>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    backdropFilter: 'blur(8px)'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>Analisando sintomas: Febre, tosse, dor de cabeça...</p>
+                  </div>
+                  
+                  <div style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    backdropFilter: 'blur(8px)'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Diagnóstico Preliminar:</p>
+                    <p style={{ margin: '4px 0', fontSize: '13px', opacity: 0.9 }}>🦠 Infecção respiratória viral (85% de confiança)</p>
+                    <p style={{ margin: '4px 0', fontSize: '13px', opacity: 0.9 }}>💊 Recomendações: Repouso, hidratação, monitoramento</p>
+                  </div>
+                  
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <div style={{
+                      flex: 1,
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                      borderRadius: '6px',
+                      padding: '12px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                      opacity: 0.9
+                    }}>
+                      Análise de Risco: Baixo
+                    </div>
+                    <div style={{
+                      flex: 1,
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                      borderRadius: '6px',
+                      padding: '12px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                      opacity: 0.9
+                    }}>
+                      Urgência: Moderada
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Elementos de destaque */}
+              <div style={{
+                position: 'absolute',
+                top: '-12px',
+                right: '-12px',
+                backgroundColor: '#10b981',
+                color: 'white',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: '600',
+                boxShadow: '0 4px 8px rgba(16, 185, 129, 0.3)'
+              }}>
+                +95% Precisão
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-12px',
+                left: '-12px',
+                backgroundColor: '#2563eb',
+                color: 'white',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: '600',
+                boxShadow: '0 4px 8px rgba(37, 99, 235, 0.3)'
+              }}>
+                📊 Machine Learning
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
-      <Container id="features" sx={{ py: 10 }} maxWidth="lg">
-        <Typography variant="h3" align="center" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
-          Inteligência a Serviço da Saúde
-        </Typography>
-        <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 6, maxWidth: 700, mx: 'auto' }}>
-          Descubra como nossa plataforma está revolucionando o diagnóstico médico com tecnologia de ponta
-        </Typography>
-        
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Fade in={isVisible} timeout={1000}>
-              <Card sx={{ 
-                height: '100%', 
-                transition: '0.3s', 
-                borderRadius: 4,
-                '&:hover': { 
-                  transform: 'translateY(-8px)', 
-                  boxShadow: '0 16px 32px rgba(0,0,0,0.15)',
-                  '& .MuiCardContent-root': {
-                    background: 'linear-gradient(135deg, rgba(25,118,210,0.03) 0%, rgba(25,118,210,0.1) 100%)'
-                  }
-                }
+      <section id="features" style={{ 
+        padding: '100px 24px', 
+        backgroundColor: 'white'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <h2 style={{
+              fontSize: '42px',
+              fontWeight: 'bold',
+              color: '#111827',
+              marginBottom: '16px'
+            }}>
+              Tecnologia que{' '}
+              <span style={{
+                background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
               }}>
-                <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                  <Box sx={{ 
-                    display: 'inline-flex', 
-                    p: 2, 
-                    mb: 2, 
-                    borderRadius: 3, 
-                    bgcolor: 'primary.main', 
-                    color: 'white',
-                    animation: `${floatAnimation} 3s ease-in-out infinite`
-                  }}>
-                    <AutoAwesomeIcon sx={{ fontSize: 40 }} />
-                  </Box>
-                  <Typography gutterBottom variant="h5" component="h2" sx={{ fontWeight: 600 }}>
-                    Análise Preditiva
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Utiliza algoritmos avançados para analisar dados complexos, identificando padrões que o olho humano poderia não perceber.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Fade>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '100ms' }}>
-              <Card sx={{ 
-                height: '100%', 
-                transition: '0.3s', 
-                borderRadius: 4,
-                '&:hover': { 
-                  transform: 'translateY(-8px)', 
-                  boxShadow: '0 16px 32px rgba(0,0,0,0.15)',
-                  '& .MuiCardContent-root': {
-                    background: 'linear-gradient(135deg, rgba(25,118,210,0.03) 0%, rgba(25,118,210,0.1) 100%)'
-                  }
-                }
-              }}>
-                <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                  <Box sx={{ 
-                    display: 'inline-flex', 
-                    p: 2, 
-                    mb: 2, 
-                    borderRadius: 3, 
-                    bgcolor: 'primary.main', 
-                    color: 'white',
-                    animation: `${floatAnimation} 3s ease-in-out infinite`,
-                    animationDelay: '1s'
-                  }}>
-                    <SpeedIcon sx={{ fontSize: 40 }} />
-                  </Box>
-                  <Typography gutterBottom variant="h5" component="h2" sx={{ fontWeight: 600 }}>
-                    Velocidade e Eficiência
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Receba pré-diagnósticos e relatórios em segundos. Otimize seu tempo e foque no que realmente importa: seus pacientes.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Fade>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '200ms' }}>
-              <Card sx={{ 
-                height: '100%', 
-                transition: '0.3s', 
-                borderRadius: 4,
-                '&:hover': { 
-                  transform: 'translateY(-8px)', 
-                  boxShadow: '0 16px 32px rgba(0,0,0,0.15)',
-                  '& .MuiCardContent-root': {
-                    background: 'linear-gradient(135deg, rgba(25,118,210,0.03) 0%, rgba(25,118,210,0.1) 100%)'
-                  }
-                }
-              }}>
-                <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                  <Box sx={{ 
-                    display: 'inline-flex', 
-                    p: 2, 
-                    mb: 2, 
-                    borderRadius: 3, 
-                    bgcolor: 'primary.main', 
-                    color: 'white',
-                    animation: `${floatAnimation} 3s ease-in-out infinite`,
-                    animationDelay: '2s'
-                  }}>
-                    <VerifiedUserIcon sx={{ fontSize: 40 }} />
-                  </Box>
-                  <Typography gutterBottom variant="h5" component="h2" sx={{ fontWeight: 600 }}>
-                    Segurança Inabalável
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Construído sobre uma infraestrutura robusta e em conformidade com a LGPD, garantindo total privacidade dos dados.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Fade>
-          </Grid>
-        </Grid>
-      </Container>
-      
-      {/* How It Works Section */}
-      <Box id="how-it-works" sx={{ py: 10, bgcolor: 'rgba(25, 118, 210, 0.03)', position: 'relative' }}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 10% 20%, rgba(25, 118, 210, 0.05) 0%, transparent 30%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <Container maxWidth="lg">
-          <Typography variant="h3" align="center" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
-            Simples, Rápido e Preciso
-          </Typography>
-          <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, maxWidth: 700, mx: 'auto' }}>
-            Três passos simples para obter análises de inteligência artificial de alta qualidade
-          </Typography>
+                Transforma
+              </span>
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#6b7280',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Recursos avançados desenvolvidos para otimizar seu fluxo de trabalho e melhorar a precisão diagnóstica
+            </p>
+          </div>
           
-          <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={4}>
-              <Fade in={isVisible} timeout={1000}>
-                <Paper elevation={0} sx={{ p: 4, textAlign: 'center', bgcolor: 'transparent', position: 'relative' }}>
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    top: -20, 
-                    left: '50%', 
-                    transform: 'translateX(-50%)', 
-                    width: 60, 
-                    height: 60, 
-                    borderRadius: '50%', 
-                    bgcolor: 'primary.main', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
-                  }}>
-                    1
-                  </Box>
-                  <UploadFileIcon sx={{ fontSize: 60, color: 'primary.main', mt: 3, mb: 2 }} />
-                  <Typography variant="h5" sx={{ mt: 2, fontWeight: 600 }}>Envio de Dados</Typography>
-                  <Typography color="text.secondary" sx={{ mt: 2 }}>Faça o upload seguro de exames, laudos e históricos do paciente em nossa plataforma intuitiva.</Typography>
-                </Paper>
-              </Fade>
-            </Grid>
-            
-            <Grid item xs={12} md={4}>
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '200ms' }}>
-                <Paper elevation={0} sx={{ p: 4, textAlign: 'center', bgcolor: 'transparent', position: 'relative' }}>
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    top: -20, 
-                    left: '50%', 
-                    transform: 'translateX(-50%)', 
-                    width: 60, 
-                    height: 60, 
-                    borderRadius: '50%', 
-                    bgcolor: 'primary.main', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
-                  }}>
-                    2
-                  </Box>
-                  <PsychologyIcon sx={{ fontSize: 60, color: 'primary.main', mt: 3, mb: 2 }} />
-                  <Typography variant="h5" sx={{ mt: 2, fontWeight: 600 }}>Análise da IA</Typography>
-                  <Typography color="text.secondary" sx={{ mt: 2 }}>Nossa IA processa as informações em segundos, cruzando dados com milhões de casos clínicos.</Typography>
-                </Paper>
-              </Fade>
-            </Grid>
-            
-            <Grid item xs={12} md={4}>
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '400ms' }}>
-                <Paper elevation={0} sx={{ p: 4, textAlign: 'center', bgcolor: 'transparent', position: 'relative' }}>
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    top: -20, 
-                    left: '50%', 
-                    transform: 'translateX(-50%)', 
-                    width: 60, 
-                    height: 60, 
-                    borderRadius: '50%', 
-                    bgcolor: 'primary.main', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
-                  }}>
-                    3
-                  </Box>
-                  <ArticleIcon sx={{ fontSize: 60, color: 'primary.main', mt: 3, mb: 2 }} />
-                  <Typography variant="h5" sx={{ mt: 2, fontWeight: 600 }}>Relatório Detalhado</Typography>
-                  <Typography color="text.secondary" sx={{ mt: 2 }}>Receba um relatório completo com insights, probabilidades diagnósticas e sugestões baseadas em evidências.</Typography>
-                </Paper>
-              </Fade>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '32px'
+          }}>
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                style={{
+                  padding: '32px 24px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%)',
+                  border: '1px solid #e5e7eb',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  height: '100%'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.08)';
+                  e.currentTarget.style.borderColor = '#2563eb';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.borderColor = '#e5e7eb';
+                }}
+              >
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '24px',
+                  marginBottom: '20px'
+                }}>
+                  {feature.icon}
+                </div>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '12px'
+                }}>
+                  {feature.title}
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  lineHeight: '1.6',
+                  margin: 0,
+                  fontSize: '15px'
+                }}>
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Benefits Section */}
-      <Box id="benefits" sx={{ py: 10 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h3" align="center" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
-            Vantagens de Utilizar a Aurora IA
-          </Typography>
-          <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, maxWidth: 700, mx: 'auto' }}>
-            Descubra todos os benefícios que nossa plataforma pode oferecer para sua prática médica
-          </Typography>
+      <section id="benefits" style={{ 
+        padding: '100px 24px', 
+        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <h2 style={{
+              fontSize: '42px',
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: '16px'
+            }}>
+              Vantagens Comprovadas
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#bfdbfe',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Resultados reais que fazem a diferença na prática clínica diária
+            </p>
+          </div>
           
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <Fade in={isVisible} timeout={1000}>
-                <Box sx={{ display: 'flex', mb: 4 }}>
-                  <HealthAndSafetyIcon color="primary" sx={{ fontSize: 40, mr: 2 }} />
-                  <Box>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Melhor Precisão Diagnóstica</Typography>
-                    <Typography color="text.secondary">
-                      Nossa IA analisa padrões complexos em exames com uma precisão de 98%, reduzindo significativamente os erros diagnósticos.
-                    </Typography>
-                  </Box>
-                </Box>
-              </Fade>
-              
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '100ms' }}>
-                <Box sx={{ display: 'flex', mb: 4 }}>
-                  <AnalyticsIcon color="primary" sx={{ fontSize: 40, mr: 2 }} />
-                  <Box>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Economia de Tempo</Typography>
-                    <Typography color="text.secondary">
-                      Reduza o tempo de análise de exames em até 70%, permitindo que você atenda mais pacientes sem perder a qualidade.
-                    </Typography>
-                  </Box>
-                </Box>
-              </Fade>
-              
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '200ms' }}>
-                <Box sx={{ display: 'flex' }}>
-                  <GroupsIcon color="primary" sx={{ fontSize: 40, mr: 2 }} />
-                  <Box>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Suporte à Decisão Clínica</Typography>
-                    <Typography color="text.secondary">
-                      Obtenha insights valiosos baseados em milhões de casos para apoiar suas decisões clínicas com mais confiança.
-                    </Typography>
-                  </Box>
-                </Box>
-              </Fade>
-            </Grid>
-            
-            <Grid item xs={12} md={6}>
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '300ms' }}>
-                <Paper sx={{ p: 4, borderRadius: 4, bgcolor: 'primary.main', color: 'white', height: '100%' }}>
-                  <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>Comece Agora Mesmo</Typography>
-                  <Typography sx={{ mb: 3 }}>Experimente gratuitamente por 14 dias e descubra como a Aurora IA pode transformar sua prática médica.</Typography>
-                  
-                  <Box sx={{ mb: 3 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <CheckCircleIcon sx={{ mr: 1 }} />
-                      <Typography>Análise de até 5 exames por mês</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <CheckCircleIcon sx={{ mr: 1 }} />
-                      <Typography>Relatórios completos e detalhados</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <CheckCircleIcon sx={{ mr: 1 }} />
-                      <Typography>Suporte técnico especializado</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <CheckCircleIcon sx={{ mr: 1 }} />
-                      <Typography>Sem compromisso, cancele quando quiser</Typography>
-                    </Box>
-                  </Box>
-                  
-                  <Button 
-                    variant="contained" 
-                    size="large" 
-                    sx={{ 
-                      bgcolor: 'white', 
-                      color: 'primary.main',
-                      '&:hover': {
-                        bgcolor: 'rgba(255, 255, 255, 0.9)'
-                      }
-                    }}
-                  >
-                    Experimente Grátis
-                  </Button>
-                </Paper>
-              </Fade>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '40px',
+            marginBottom: '80px'
+          }}>
+            {benefits.map((benefit, index) => (
+              <div 
+                key={index} 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'flex-start', 
+                  gap: '16px'
+                }}
+              >
+                <div style={{ 
+                  color: '#10b981', 
+                  fontSize: '20px', 
+                  marginTop: '2px',
+                  flexShrink: 0
+                }}>✓</div>
+                <p style={{
+                  fontSize: '17px',
+                  color: 'white',
+                  lineHeight: '1.6',
+                  margin: 0
+                }}>
+                  {benefit}
+                </p>
+              </div>
+            ))}
+          </div>
+          
+          <div style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: '16px',
+            padding: '48px 32px',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '40px',
+              textAlign: 'center'
+            }}>
+              <div>
+                <div style={{ 
+                  fontSize: '48px', 
+                  fontWeight: 'bold', 
+                  color: 'white', 
+                  marginBottom: '8px',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #bfdbfe 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>40%</div>
+                <div style={{ color: '#bfdbfe', fontSize: '18px', fontWeight: '500' }}>Mais Rápido</div>
+              </div>
+              <div>
+                <div style={{ 
+                  fontSize: '48px', 
+                  fontWeight: 'bold', 
+                  color: 'white', 
+                  marginBottom: '8px',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #bfdbfe 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>95%</div>
+                <div style={{ color: '#bfdbfe', fontSize: '18px', fontWeight: '500' }}>Precisão</div>
+              </div>
+              <div>
+                <div style={{ 
+                  fontSize: '48px', 
+                  fontWeight: 'bold', 
+                  color: 'white', 
+                  marginBottom: '8px',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #bfdbfe 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>24/7</div>
+                <div style={{ color: '#bfdbfe', fontSize: '18px', fontWeight: '500' }}>Disponibilidade</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Testimonials Section */}
-      <Box id="testimonials" sx={{ py: 10, bgcolor: 'rgba(25, 118, 210, 0.03)' }}>
-        <Container maxWidth="lg">
-          <Typography variant="h3" align="center" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
-            O que os Especialistas Dizem
-          </Typography>
-          <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, maxWidth: 700, mx: 'auto' }}>
-            Confira a opinião de profissionais de saúde que já utilizam a Aurora IA em sua prática clínica
-          </Typography>
-          
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <Fade in={isVisible} timeout={1000}>
-                <Paper variant="outlined" sx={{ p: 4, borderRadius: 4, height: '100%' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                    <Avatar sx={{ bgcolor: 'primary.main', width: 60, height: 60 }}>AD</Avatar>
-                    <Box>
-                      <Typography sx={{ fontWeight: 600 }}>Dra. Ana Dutra</Typography>
-                      <Typography variant="body2" color="text.secondary">Cardiologista • Hospital Albert Einstein</Typography>
-                    </Box>
-                  </Box>
-                  <FormatQuoteIcon sx={{ color: 'primary.main', fontSize: 40, mb: 2 }} />
-                  <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', mb: 3 }}>
-                    "A Aurora IA transformou a forma como analiso ecocardiogramas. A velocidade e a precisão dos insights me dão mais segurança e tempo para focar no tratamento."
-                  </Typography>
-                  <Box sx={{ display: 'flex' }}>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Box key={star} sx={{ color: 'gold', mr: 0.5 }}>★</Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Fade>
-            </Grid>
-            
-            <Grid item xs={12} md={6}>
-              <Fade in={isVisible} timeout={1000} style={{ transitionDelay: '200ms' }}>
-                <Paper variant="outlined" sx={{ p: 4, borderRadius: 4, height: '100%' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                    <Avatar sx={{ bgcolor: 'primary.main', width: 60, height: 60 }}>ML</Avatar>
-                    <Box>
-                      <Typography sx={{ fontWeight: 600 }}>Dr. Marcos Lima</Typography>
-                      <Typography variant="body2" color="text.secondary">Neurologista • Hospital Sírio-Libanês</Typography>
-                    </Box>
-                  </Box>
-                  <FormatQuoteIcon sx={{ color: 'primary.main', fontSize: 40, mb: 2 }} />
-                  <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', mb: 3 }}>
-                    "Impressionante a capacidade da plataforma de identificar padrões sutis em ressonâncias magnéticas. É uma ferramenta de apoio diagnóstico indispensável."
-                  </Typography>
-                  <Box sx={{ display: 'flex' }}>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Box key={star} sx={{ color: 'gold', mr: 0.5 }}>★</Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Fade>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-      
-      {/* CTA Section */}
-      <Box sx={{ 
-        py: 10, 
-        background: 'linear-gradient(-45deg, #1e1e2f, #3a3a5e, #2c2c4c, #252542)',
-        backgroundSize: '400% 400%',
-        animation: `${gradientAnimation} 15s ease infinite`,
-        color: '#fff', 
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden'
+      <section id="testimonials" style={{ 
+        padding: '100px 24px', 
+        backgroundColor: 'white'
       }}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 70% 30%, rgba(129, 212, 250, 0.2) 0%, transparent 40%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <Container maxWidth="md">
-          <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
-            Pronto para Revolucionar sua Prática Clínica?
-          </Typography>
-          <Typography sx={{ my: 2, color: 'rgba(255, 255, 255, 0.9)', mb: 4 }}>
-            Descubra como a Aurora IA pode otimizar seu fluxo de trabalho e aprimorar a precisão dos seus diagnósticos.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Button 
-              variant="contained" 
-              size="large" 
-              color="primary" 
-              sx={{ 
-                py: 1.5, 
-                px: 5, 
-                fontSize: '1.1rem',
-                borderRadius: 2,
-                animation: `${pulseAnimation} 2s infinite`
-              }}
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <h2 style={{
+              fontSize: '42px',
+              fontWeight: 'bold',
+              color: '#111827',
+              marginBottom: '16px'
+            }}>
+              Confiado por{' '}
+              <span style={{
+                background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                Especialistas
+              </span>
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#6b7280',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              O que os profissionais de saúde dizem sobre o AURORA
+            </p>
+          </div>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '40px'
+          }}>
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={index} 
+                style={{
+                  background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%)',
+                  borderRadius: '16px',
+                  padding: '40px 32px',
+                  border: '1px solid #e5e7eb',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} style={{ color: '#f59e0b', fontSize: '20px', marginRight: '4px' }}>★</span>
+                  ))}
+                </div>
+                <p style={{
+                  color: '#374151',
+                  fontSize: '17px',
+                  fontStyle: 'italic',
+                  lineHeight: '1.7',
+                  marginBottom: '24px'
+                }}>
+                  "{testimonial.text}"
+                </p>
+                <div>
+                  <div style={{ fontWeight: '600', color: '#111827', fontSize: '16px' }}>{testimonial.name}</div>
+                  <div style={{ color: '#2563eb', fontSize: '14px' }}>{testimonial.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section id="contact" style={{ 
+        padding: '100px 24px', 
+        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '42px',
+            fontWeight: 'bold',
+            color: 'white',
+            marginBottom: '24px',
+            lineHeight: '1.2'
+          }}>
+            Pronto para Revolucionar seu Diagnóstico?
+          </h2>
+          <p style={{
+            fontSize: '18px',
+            color: '#bfdbfe',
+            marginBottom: '48px',
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            lineHeight: '1.6'
+          }}>
+            Junte-se a milhares de profissionais de saúde que já confiam no AURORA
+          </p>
+          
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '24px' }}>
+            <button style={{
+              backgroundColor: 'white',
+              color: '#2563eb',
+              padding: '18px 36px',
+              borderRadius: '8px',
+              fontWeight: '600',
+              fontSize: '16px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }}
             >
-              Fale com um Especialista
-            </Button>
-            <Button 
-              variant="outlined" 
-              size="large" 
-              sx={{ 
-                py: 1.5, 
-                px: 5, 
-                fontSize: '1.1rem',
-                borderRadius: 2,
+              Solicitar Demonstração
+            </button>
+            <button 
+              onClick={handleLogin}
+              style={{
+                border: '2px solid white',
                 color: 'white',
-                borderColor: 'white',
-                '&:hover': {
-                  borderColor: 'white',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                }
+                padding: '18px 36px',
+                borderRadius: '8px',
+                fontWeight: '600',
+                fontSize: '16px',
+                backgroundColor: 'transparent',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'white';
+                e.currentTarget.style.color = '#2563eb';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              Ver Planos e Preços
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+              Fazer Login
+            </button>
+          </div>
+          
+          <div style={{ color: '#93c5fd', fontSize: '14px' }}>
+            ⚡ Teste gratuito de 30 dias • Sem compromisso • Suporte dedicado
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <Box component="footer" sx={{ bgcolor: 'background.paper', py: 8 }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <AutoAwesomeIcon sx={{ mr: 1, color: 'primary.main' }} />
-                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                  Aurora IA
-                </Typography>
-              </Box>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                A plataforma de inteligência artificial que está revolucionando o diagnóstico médico com tecnologia de ponta.
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <IconButton size="small"><FacebookIcon /></IconButton>
-                <IconButton size="small"><TwitterIcon /></IconButton>
-                <IconButton size="small"><LinkedInIcon /></IconButton>
-                <IconButton size="small"><InstagramIcon /></IconButton>
-              </Box>
-            </Grid>
+      <footer style={{ 
+        backgroundColor: '#111827', 
+        color: 'white', 
+        padding: '60px 24px'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '40px',
+            marginBottom: '40px'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: '18px'
+                }}>
+                  🏥
+                </div>
+                <span style={{ fontSize: '22px', fontWeight: 'bold' }}>AURORA</span>
+              </div>
+              <p style={{ color: '#9ca3af', margin: 0, lineHeight: '1.6' }}>
+                Assistente inteligente de diagnóstico médico powered by AI.
+              </p>
+            </div>
             
-            <Grid item xs={12} md={2}>
-              <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Recursos</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Análise de Imagens</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Diagnóstico Preditivo</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Relatórios Detalhados</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block' }}>Integrações</Typography>
-            </Grid>
+            <div>
+              <h3 style={{ fontWeight: '600', marginBottom: '20px', fontSize: '16px' }}>Produto</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#9ca3af' }}>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Recursos</a></li>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Preços</a></li>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Casos de Uso</a></li>
+              </ul>
+            </div>
             
-            <Grid item xs={12} md={2}>
-              <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Empresa</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Sobre Nós</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Carreiras</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Blog</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ display: 'block' }}>Contato</Typography>
-            </Grid>
+            <div>
+              <h3 style={{ fontWeight: '600', marginBottom: '20px', fontSize: '16px' }}>Empresa</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#9ca3af' }}>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Sobre</a></li>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Blog</a></li>
+                <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.3s' }}>Carreiras</a></li>
+              </ul>
+            </div>
             
-            <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Inscreva-se para Novidades</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Receba as últimas atualizações e novidades da Aurora IA.</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <input 
-                  type="email" 
-                  placeholder="Seu e-mail" 
-                  style={{ 
-                    flexGrow: 1, 
-                    padding: '10px 16px', 
-                    border: '1px solid #ccc', 
-                    borderRadius: '4px 0 0 4px',
-                    fontSize: '14px'
-                  }} 
-                />
-                <Button variant="contained" color="primary" sx={{ borderRadius: '0 4px 4px 0' }}>
-                  Inscrever
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
+            <div>
+              <h3 style={{ fontWeight: '600', marginBottom: '20px', fontSize: '16px' }}>Contato</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#9ca3af' }}>
+                <li style={{ marginBottom: '12px' }}>contato@aurora-med.com</li>
+                <li style={{ marginBottom: '12px' }}>+55 (11) 99999-9999</li>
+                <li style={{ marginBottom: '12px' }}>São Paulo, SP</li>
+              </ul>
+            </div>
+          </div>
           
-          <Divider sx={{ my: 4 }} />
-          
-          <Typography variant="body2" color="text.secondary" align="center">
-            {'© '}
-            {new Date().getFullYear()}
-            {' Aurora IA. Todos os direitos reservados.'}
-          </Typography>
-          <Typography variant="caption" color="text.secondary" align="center" display="block" sx={{ mt: 1 }}>
-            A plataforma Aurora IA é uma ferramenta de suporte à decisão clínica e não substitui o julgamento de um profissional de saúde qualificado.
-          </Typography>
-        </Container>
-      </Box>
-    </Box>
+          <div style={{
+            borderTop: '1px solid #374151',
+            paddingTop: '32px',
+            textAlign: 'center',
+            color: '#9ca3af',
+            fontSize: '14px'
+          }}>
+            <p style={{ margin: 0 }}>&copy; 2024 AURORA Medical AI. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
   );
-}
+};
+
+export default AuroraLandingPage;

@@ -1,6 +1,8 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import HydrationWrapper from "../components/HydrationWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} bg-light text-secondary antialiased`}>
-        {children}
+        <HydrationWrapper>
+          {children}
+        </HydrationWrapper>
       </body>
     </html>
   );
