@@ -29,7 +29,7 @@ Follow the steps below to run the application in your local development environm
     Clone the Repository
     Bash
 
-git clone <YOUR_GIT_REPOSITORY_URL>
+git clone <https://github.com/LucasGit10/AURORA-TCC.git>
 cd AURORA-TCC
 
 Build and Start the Containers
