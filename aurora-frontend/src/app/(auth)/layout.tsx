@@ -1,16 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ProtectedLayout } from '@/components/layout/ProtectedLayout';
-import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Hospital Aurora - Sistema Médico',
-  description: 'Sistema completo para gerenciamento hospitalar',
+  title: 'Hospital Aurora - Acesso',
+  description: 'Sistema hospitalar - Área de acesso',
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -18,9 +16,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-          <ProtectedLayout>
+          <div className="auth-container">
             {children}
-          </ProtectedLayout>
+          </div>
       </body>
     </html>
   );
