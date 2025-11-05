@@ -43,7 +43,7 @@ const menuItems: MenuItem[] = [
   { text: 'Pacientes', icon: People, href: '/patients' },
   { text: 'Consultas', icon: CalendarToday, href: '/appointments' },
   { text: 'Laudos', icon: Description, href: '/reports' },
-  { text: 'Prontuários', icon: LocalHospital, href: '/medical-records' },
+  { text: 'Chat IA', icon: LocalHospital, href: '/medical-chat' },
 ];
 
 const bottomMenuItems: MenuItem[] = [
