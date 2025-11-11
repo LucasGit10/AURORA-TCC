@@ -1,0 +1,1 @@
+{"_id":{"$oid":"69127c885b4d414c1e63b114"},"paciente_id":{"$oid":"69127c095b4d414c1e63b113"},"medico_id":{"$oid":"69127bfb5b4d414c1e63b112"},"data_consulta":{"$date":"2025-05-10T14:00:00Z"},"motivo":"Tosse persistente e falta de ar","diagnostico_preliminar":"Suspeita de pneumonia","status":"Em análise","observacoes":"Solicitada radiografia de tórax"}
