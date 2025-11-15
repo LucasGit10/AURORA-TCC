@@ -26,6 +26,7 @@ import {
 } from '@mui/icons-material';
 import { usePathname } from 'next/navigation';
 import { ElementType } from 'react';
+import { useAuth } from '@/context/AuthContext';
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -54,17 +55,28 @@ const bottomMenuItems: MenuItem[] = [
 export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   const pathname = usePathname();
   const theme = useTheme();
+  const { logout } = useAuth();
 
   const renderMenuItem = (item: MenuItem, isBottom: boolean = false) => {
     const isActive = !isBottom && (pathname === item.href);
     const IconComponent = item.icon;
     const defaultColor = isBottom ? theme.palette.text.secondary : theme.palette.text.primary;
+    
+    const isLogout = item.href === '/logout';
+
+    const buttonProps = isLogout 
+      ? {
+          onClick: () => logout(),
+        }
+      : {
+          href: item.href,
+        };
 
     return (
       <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
         <Tooltip title={isCollapsed ? item.text : ''} placement="right" disableHoverListener={!isCollapsed}>
           <ListItemButton
-            href={item.href}
+            {...buttonProps}
             sx={{
               borderRadius: 2,
               py: 1.25,
@@ -202,7 +214,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
           {bottomMenuItems.map(item => renderMenuItem(item, true))}
         </List>
       </Box>
-
+      
       <Box 
         onClick={onToggle} 
         sx={{ 

@@ -2,6 +2,7 @@ import { Controller, Get, Query, HttpException, HttpStatus } from '@nestjs/commo
 import { Icd11Service } from './services/icd11/icd11.service';
 import { SnomedService } from './services/snomed/snomed.service';
 import { TerminologiaResultDto } from './dto/terminologia-result.dto';
+import { SearchQueryDto } from './dto/search-query.dto';
 
 @Controller('terminologia')
 export class TerminologiaController {
@@ -12,13 +13,11 @@ export class TerminologiaController {
 
   @Get('icd11/search')
   async searchIcd11(
-    @Query('q') query: string,
+    @Query() query: SearchQueryDto,
   ): Promise<TerminologiaResultDto[]> {
-    if (!query || query.length < 3) {
-      return [];
-    }
+
     try {
-      return await this.icd11Service.search(query);
+      return await this.icd11Service.search(query.q);
     } catch (error) {
       throw new HttpException(
         'Erro ao consultar ICD-11',
@@ -29,13 +28,10 @@ export class TerminologiaController {
 
   @Get('snomed/search')
   async searchSnomed(
-    @Query('q') query: string,
-  ): Promise<TerminologiaResultDto[]> {
-    if (!query || query.length < 3) {
-      return [];
-    }
+    @Query() query: SearchQueryDto,
+  ): Promise<TerminologiaResultDto[]> {    
     try {
-      return await this.snomedService.search(query);
+      return await this.snomedService.search(query.q);
     } catch (error) {
       throw new HttpException(
         'Erro ao consultar SNOMED CT',
