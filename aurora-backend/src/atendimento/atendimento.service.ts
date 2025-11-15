@@ -17,6 +17,9 @@ export class AtendimentoService {
   }
 
   async findByPaciente(pacienteId: string): Promise<Atendimento[]> {
-    return this.atendimentoModel.find({ pacienteId: pacienteId }).exec();
+    return this.atendimentoModel
+      .find({ pacienteId: pacienteId })
+      .sort({ createdAt: -1 })
+      .exec();
   }
 }

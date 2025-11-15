@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import { 
+  Alert,
   Box, 
   Button, 
   Checkbox,
@@ -13,6 +14,7 @@ import {
 import { keyframes } from '@mui/system';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AuthLayout from '@/components/AuthLayout';
+import { useAuth } from '@/context/AuthContext';
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(15px); }
@@ -22,14 +24,23 @@ const fadeIn = keyframes`
 export default function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  
   const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      await login(email, password);
+    } catch (err: any) {
       setIsLoading(false);
-    }, 2000);
+      setError(err.response?.data?.message || 'Email ou senha inválidos.');
+    }
   };
 
   return (
@@ -66,6 +77,13 @@ export default function LoginPage() {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
           <Stack spacing={3}>
+
+            {error && (
+              <Alert severity="error" sx={{ animation: `${fadeIn} 0.6s forwards`, opacity: 0 }}>
+                {error}
+              </Alert>
+            )}
+
             <TextField
               required
               fullWidth
