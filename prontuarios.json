@@ -1,1 +1,0 @@
-{"_id":{"$oid":"69127eda5b4d414c1e63b117"},"paciente_id":{"$oid":"69127c095b4d414c1e63b113"},"consultas":[{"$oid":"69127c885b4d414c1e63b114"}],"laudos":[{"$oid":"69127da35b4d414c1e63b116"}],"anotacoes_gerais":"Paciente apresentou melhora após antibioticoterapia.","ultima_atualizacao":{"$date":"2025-06-01T10:00:00Z"}}
